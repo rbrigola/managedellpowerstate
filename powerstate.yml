@@ -1,0 +1,33 @@
+---
+- hosts: poweredge
+  connection: local
+#(Choices: ForceOff, ForceOn, ForceRestart, GracefulRestart, GracefulShutdown, Nmi, On, PowerCycle, PushPowerButton)
+  vars_files:
+    - secret.yml
+
+  tasks:
+  - name: System power on.
+    dellemc.openmanage.redfish_powerstate:
+      baseuri: "{{ baseuri }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      reset_type: "On"
+    tags: PowerOn
+
+  - name: system power off
+    dellemc.openmanage.redfish_powerstate:
+      baseuri: "{{ baseuri }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      reset_type: "ForceOff"
+    tags: ForceOff
+
+  - name: system restart
+    dellemc.openmanage.redfish_powerstate:
+      baseuri: "{{ baseuri }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      reset_type: "ForceRestart"
+    tags: ForceRestart
+
+
